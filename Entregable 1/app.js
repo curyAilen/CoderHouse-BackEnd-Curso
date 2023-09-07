@@ -27,14 +27,14 @@ class ProductManager {
     }
 
     getProduct(){
-        return this.products
+        return this.products;
             
     }
     getProductById(id){
         const productIdFind = this.products.find(productFind => productFind.id === id);
         if(!productIdFind){
-            console.log("porducto no encontrado")
+         return console.error("Not Found");
         }
-        return
+        return productIdFind
     }
 }
