@@ -18,6 +18,3 @@
 - Debe tener un método **getProductById**, el cual debe recibir un id, y tras leer el archivo, debe buscar el producto con el id especificado y devolverlo en formato objeto **✓**
 - Debe tener un método **updateProduct**, el cual debe recibir el id del producto a actualizar, así también como el campo a actualizar (puede ser el objeto completo, como en una DB), y debe actualizar el producto que tenga ese id en el archivo. **NO DEBE BORRARSE SU ID** **✓**
 - Debe tener un método **deleteProduct**, el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo. **✓**
-
-
-
