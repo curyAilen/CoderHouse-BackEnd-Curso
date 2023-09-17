@@ -61,7 +61,7 @@ class ProductManager {
         this.saveProduct();
     }
 }
-////////////////////// T E S T E R ///////////////////////
+////////////////////// T E S T E R /////////////////////// 
 const productManager = new ProductManager();
 const product1 = productManager.addProduct("Producto 1", "prdocuto agregado en indice 1", 1000, "imagen1.jpg", 10, 5);
 const product2 = productManager.addProduct("Producto 2", "prdocuto agregado en indice 2", 1005, "imagen0.jpg", 20, 5);
