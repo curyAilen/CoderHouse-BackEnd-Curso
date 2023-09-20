@@ -1,80 +1,35 @@
-const fs = require('fs');
-class ProductManager {
-    constructor() {
-        this.path = 'Product.json';
-        this.products = [];
-        this.autoIncrementId = 1;
-    }    
-    addProduct(title, description, price, thumbnail, code, stock) {
-        if (!title || !description || !price || !thumbnail || !code || !stock) {
-            throw new Error('Los campos son obligatorios');
-        }
-        const productExist = this.products.find(product => product.code === code);
-        if (productExist) {
-            throw new Error('Ya existe un Producto con ese ID')
-        }
-        const newProduct = {
-            title,
-            description,
-            price,
-            thumbnail,
-            code: this.autoIncrementId++,
-            stock
-        }
-        this.products.push(newProduct);
-        this.saveProduct();
-        return JSON.parse(fs.readFileSync(this.path, 'utf-8')) || [];
-    }
-    saveProduct() {
-        fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
-    }    
-    getProduct(){
-        return fs.readFileSync(this.path, 'utf-8') || [];
-    }
-    getProductById(code){
-        const data = JSON.parse(fs.readFileSync(this.path, 'utf-8'))
-        const productIdFind = data.find(productFind => productFind.code === code);
-        if(!productIdFind){
-         return console.error("Not Found");
-        }
-        return productIdFind
-    }
-    updateProduct(code, updateData) {
-        const productIndex = this.products.findIndex(product => product.code === code);
-        if (productIndex === -1) {
-            throw new Error('El producto no fue encontrado.');
-        }
-        updateData.code = this.products[productIndex].code;
-        this.products[productIndex] = {
-            ...this.products[productIndex],
-            ...updateData
-        };
-        this.saveProduct();
-        return this.products[productIndex];
-    }
-    deleteProduct(code) {
-        const productIndex = this.products.findIndex(product => product.code === code);
-        if (productIndex === -1) {
-            throw new Error('El producto no fue encontrado.');
-        }
-        this.products.splice(productIndex, 1);
-        this.saveProduct();
-    }
+const express = require ('express');
+const path = require ('path');
+const ProductManager = require('./views/ProductManager');
+const fs = require('fs').promises;
+
+const app = express();
+const port = 8080;
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+const productManager = new ProductManager('products.json');
+
+app.get ('/products', async (req, res) => {
+try{
+ const limit = paseInt(req.query.limit);
+ await productManager.loadProducts();
+ let products = productManager.getProduct();
+
+if (!isNaN(limit)){
+    products = products.slice(0, limit);
 }
-////////////////////// T E S T E R /////////////////////// 
-const productManager = new ProductManager();
-const product1 = productManager.addProduct("Producto 1", "prdocuto agregado en indice 1", 1000, "imagen1.jpg", 10, 5);
-const product2 = productManager.addProduct("Producto 2", "prdocuto agregado en indice 2", 1005, "imagen0.jpg", 20, 5);
-const product3 = productManager.addProduct("Producto 3", "prdocuto agregado en indice 3", 3050, "imagen12.jpg", 30, 30);
-const product4 = productManager.addProduct("Producto 4", "prdocuto agregado en indice 4", 3005, "imagen12.jpg", 40, 30);
-const product5 = productManager.addProduct("Producto 5", "prdocuto agregado en indice 5", 1000, "imagen1.jpg", 50, 5);
-const product6 = productManager.addProduct("Producto 6", "prdocuto agregado en indice 6", 1077, "imagen0.jpg", 60, 5);
-const product7 = productManager.addProduct("Producto 7", "prdocuto agregado en indice 7", 300, "imagen12.jpg", 70, 30);
-const product8 = productManager.addProduct("Producto 8", "prdocuto agregado en indice 8", 4587, "imagen12.jpg", 80, 30);
-console.log("Productos Agregados", product1,product2, product3)
-const productEncontrado = productManager.getProductById(4);
-console.log("Producto encontrado por ID:", productEncontrado);
-const updateProdut = productManager.updateProduct(2, {title: 'Producto actualizado', description: "Nueva información actulizada y precio", price: 55400});
-console.log('Producto actualizado:', updateProdut);
-productManager.deleteProduct(4);
-console.log('Producto eliminado con ID 4 y traigo todos los productos:', productManager.getProduct());
+res.json({products});
+}
+catch(error){
+ res.status(500).json({ error: error.message});
+}
+})
+
+app.listen(port, () => {
+    console.log(`Servidor en funcionamiento en el puerto ${port}`);
+});

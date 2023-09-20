@@ -12,5 +12,5 @@
     - Si se recibe un límite, sólo devolver el número de productos solicitados.
     - ruta ‘/products/:pid’, la cual debe recibir por req.params el pid (product Id), y devolver sólo el producto solicitado, en lugar de todos los productos. 
 
-
-**✓**
+### Correciones
+- Se agrego el campo id, para que sea el dato autoincremental y el code pase a ser un dato del producto. **✓**
