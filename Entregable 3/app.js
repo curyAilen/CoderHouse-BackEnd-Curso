@@ -30,16 +30,18 @@ catch(error){
  res.status(500).json({ error: error.message});
 }
 })
+
 app.get('/products/:pid', async (req, res) => {
-    try {
-        const productId = parseInt(req.params.pid);
+    const productId = parseInt(req.params.pid);
+    try {      
         await productManager.getProduct();
         const product = productManager.getProductById(productId);
-        res.json({ product });
+        res.send(product.JSON.parse(product));
     } catch (error) {
         res.status(404).json({ error: 'Producto no encontrado' });
     }
 });
+
 app.listen(port, () => {
     console.log(`Servidor en funcionamiento en el puerto localhost:${port}`);
 });
