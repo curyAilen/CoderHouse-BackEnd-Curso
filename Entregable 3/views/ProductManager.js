@@ -31,15 +31,15 @@ class ProductManager {
     }    
     getProduct(){
         return fs.readFileSync(this.path, 'utf-8') || [];
-    }
-    getProductById(id){
-        const data = JSON.parse(fs.readFileSync(this.path, 'utf-8'))
+    }    getProductById(id) {
+        const data = JSON.parse(fs.readFileSync(this.path, 'utf-8'));
         const productIdFind = data.find(productFind => productFind.id === id);
-        if(!productIdFind){
-         return console.error("Not Found");
+        if (!productIdFind) {
+            return console.error("Not Found");
         }
-        return productIdFind
-    }
+        return productIdFind;
+    }   
+    
     updateProduct(id, updateData) {
         const productIndex = this.products.findIndex(product => product.id === id);
         if (productIndex === -1) {

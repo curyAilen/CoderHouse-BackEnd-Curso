@@ -16,9 +16,10 @@ const productManager = new ProductManager('products.json');
 
 app.get ('/products', async (req, res) => {
 try{
- const limit = paseInt(req.query.limit);
- await productManager.loadProducts();
- let products = productManager.getProduct();
+ const limit = parseInt(req.query.limit);
+ await productManager.getProduct();
+ let products = JSON.parse(productManager.getProduct());
+
 
 if (!isNaN(limit)){
     products = products.slice(0, limit);
@@ -29,18 +30,16 @@ catch(error){
  res.status(500).json({ error: error.message});
 }
 })
-app.get('/products/:pid', async (req, res)=>{
-    try{
+app.get('/products/:pid', async (req, res) => {
+    try {
         const productId = parseInt(req.params.pid);
-        await productManager.loadProducts(); 
+        await productManager.getProduct();
         const product = productManager.getProductById(productId);
         res.json({ product });
+    } catch (error) {
+        res.status(404).json({ error: 'Producto no encontrado' });
     }
-    catch(error)
-{
-    res.status(404).json({ error: 'Producto no encontrado' });
-}})
-
+});
 app.listen(port, () => {
     console.log(`Servidor en funcionamiento en el puerto localhost:${port}`);
 });
