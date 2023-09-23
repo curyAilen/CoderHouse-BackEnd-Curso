@@ -16,7 +16,7 @@ class ProductManager {
         const newProduct = {
             id: this.autoIncrementId++,
             title,
-            description,
+            description, 
             price,
             thumbnail,
             code,
