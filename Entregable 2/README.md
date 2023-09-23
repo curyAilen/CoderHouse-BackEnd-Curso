@@ -3,7 +3,7 @@
 ## Consigna:
 *Realizar una clase “ProductManager” que gestione un conjunto de productos.* 
 
-### Aspectos a incluir
+### Aspectos a incluir 
 - La clase debe contar con una variable **this.path**, el cual se inicializará desde el constructor y debe recibir la ruta a trabajar desde el momento de generar su instancia.
 - Debe guardar objetos con el siguiente formato:
     - id (se debe incrementar automáticamente, no enviarse desde el cuerpo)

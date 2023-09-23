@@ -47,7 +47,7 @@ class ProductManager {
         updateData.code = this.products[productIndex].code; 
         this.products[productIndex] = {
             ...this.products[productIndex],
-            ...updateData
+            ...updateData  
         };
         this.saveProduct();
         return this.products[productIndex];
