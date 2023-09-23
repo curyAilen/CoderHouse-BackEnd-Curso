@@ -44,7 +44,7 @@ class ProductManager {
         if (productIndex === -1) {
             throw new Error('El producto no fue encontrado.');
         }
-        updateData.code = this.products[productIndex].code;
+        updateData.code = this.products[productIndex].code; 
         this.products[productIndex] = {
             ...this.products[productIndex],
             ...updateData

@@ -3,7 +3,7 @@
     "title": "Producto 1",
     "description": "prdocuto agregado en indice 1",
     "price": 1000,
-    "thumbnail": "imagen1.jpg",
+    "thumbnail": "imagen1.jpg", 
     "code": 1,
     "stock": 5
   },
