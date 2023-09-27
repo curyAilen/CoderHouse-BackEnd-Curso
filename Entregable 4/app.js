@@ -7,6 +7,8 @@ const routerMain = require('./src/routes/routerMain');
 const app = express();
 const port = 8080;
 
+const productManager = new ProductManager('products.json');
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
 app.use('/img', express.static(__dirname + '/public/img'));
@@ -19,7 +21,7 @@ app.get('/', routerMain );
 
 
 
-const productManager = new ProductManager('products.json');
+
 app.get ('/products', async (req, res) => {
 try{
  const limit = parseInt(req.query.limit);
