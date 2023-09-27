@@ -24,8 +24,5 @@ router.get("/", (req, res) => {
 }
 });
 
-router.get("/servicios", (req, res)=>{
-  res.render("servicios", { title: "Servicios" })
-});
 
 module.exports = router;
