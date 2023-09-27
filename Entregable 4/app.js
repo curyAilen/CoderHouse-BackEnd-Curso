@@ -3,11 +3,12 @@ const path = require ('path');
 const ProductManager = require('./src/views/ProductManager');
 const fs = require('fs').promises;
 const routerMain = require('./src/routes/routerMain');
+const routerCart = require ('./src/routes/routerCart')
 
 const app = express();
 const port = 8080;
 
-const productManager = new ProductManager('products.json');
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
@@ -18,10 +19,10 @@ app.use(express.urlencoded({ extended: false }));
 
 //rutas
 app.get('/', routerMain );
+app.get('/cart', routerCart );
 
 
-
-
+const productManager = new ProductManager('products.json');
 app.get ('/products', async (req, res) => {
 try{
  const limit = parseInt(req.query.limit);
