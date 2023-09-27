@@ -15,8 +15,8 @@
     <%- include ( './partials/header' ); %>
     <h1>INICIO</h1>
     <div class="row">
-        <% for (let i = 0; i < productsFind.length; i++) { %>
-            <% const product = productsFind[i]; %>
+        <% for (product of productsFind) { %>
+           
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <img src="/img/<%= product.thumbnail%>" alt="Imagen del producto" class="card-img-top">
